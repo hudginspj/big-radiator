@@ -8,7 +8,7 @@ from math import *
 
 #!!!!!!!!!! Point 1 is acting on point 2
 G = 6.673e-11
-n_points_in_ring = 1000
+n_points_in_ring = 100
 
 
 def point_accel(r_1, theta_1, r_2, m):
@@ -45,7 +45,7 @@ def ring_accel(r_ring_1, r_2):
 # mass_flux & step time -> ring mass
 starting_radius = 1e10
 step_time = 1e5
-ring_mass = 1e30
+ring_mass = 1e30#####1e29
 class Sim:
     def __init__(self, mass_flux, initial_velocity):
         self.mass_flux = mass_flux
@@ -53,14 +53,22 @@ class Sim:
         self.radii = []
         self.velocities = []
         self.n_rings = 0
+        self.rings_added = 0
         self.t = 0
-        #self.add_ring()
+        self.add_ring()
         
     def add_ring(self):
         self.radii.append(starting_radius)
         self.velocities.append(self.initial_velocity)
         self.n_rings += 1
+        self.rings_added += 1
         
+    def remove_ring(self, index):
+        self.n_rings -= 1
+        #self.radii.pop(index)
+        #self.velocities.pop(index)
+        #print("done")
+        raise Exception("done")
         
     def step(self):
         self.t += step_time
@@ -80,20 +88,30 @@ class Sim:
             accels.append(a)
             v = self.velocities[i]
             r = self.radii[i]
-            new_radii.append(r + v * step_time + 0.5 * a * step_time * step_time)
-            new_velocities.append(v + a * step_time)
+            new_r = r + v * step_time + 0.5 * a * step_time * step_time
+            new_v = v + a * step_time
+            if new_r < 0 or (new_v > 0 and v < 0):
+                print("done", new_r, new_v, v)
+                self.remove_ring(i)
+                exit(0)
+            else:
+                new_radii.append(new_r)
+                new_velocities.append(new_v)
         #print(self.radii, new_radii)
-        print("radii", new_radii, 'velocities', new_velocities)#, accels)
+        #print("radii", new_radii, 'velocities', new_velocities)#, accels)
         self.radii = new_radii
         self.velocities = new_velocities
         
 
 
-sim = Sim(1e24, 1e5)
-for i in range(20):
-    sim.step()
-    
-    
+sim = Sim(1e23, 1e5)
+while sim.radii[0] > 0: 
+    for i in range(100):
+        sim.step()
+    print('velocities', sim.velocities)
+    print("radii", sim.radii)
+    print('max radius', max(sim.radii))
+    #input("press enter")
 
 
 
