@@ -11,7 +11,7 @@ def step():
     global time
     time += 1.0
     points = {}
-    n = 1000
+    n = 10
     for i in range(n):
         theta = 2 * pi * i / n
         x = time * sin(theta)
