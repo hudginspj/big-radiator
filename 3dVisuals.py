@@ -2,10 +2,10 @@ from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 from matplotlib import style
 
+
 style.use('ggplot')
 
 
-def 
 fig = plt.figure()
 ax1 = fig.add_subplot(111, projection='3d')
 
