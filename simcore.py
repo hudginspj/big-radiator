@@ -63,17 +63,17 @@ class Sim:
         self.n_rings += 1
         self.rings_added += 1
         
-    def remove_ring(self, index):
-        self.n_rings -= 1
+    #def remove_ring(self, index):
+        #self.n_rings -= 1
         #self.radii.pop(index)
         #self.velocities.pop(index)
         #print("done")
-        raise Exception("done")
+        #raise Exception("done")
         
     def step(self):
         self.t += step_time
         
-        if self.mass_flux * self.t > ring_mass * self.n_rings:
+        if self.mass_flux * self.t > ring_mass * self.rings_added:
             
             #print(self.mass_flux * self.t, ring_mass * self.n_rings)
             self.add_ring()
@@ -92,8 +92,8 @@ class Sim:
             new_v = v + a * step_time
             if new_r < 0 or (new_v > 0 and v < 0):
                 print("done", new_r, new_v, v)
-                self.remove_ring(i)
-                exit(0)
+                self.n_rings -= 1
+                #exit(0)
             else:
                 new_radii.append(new_r)
                 new_velocities.append(new_v)
@@ -108,9 +108,9 @@ sim = Sim(1e23, 1e5)
 while sim.radii[0] > 0: 
     for i in range(100):
         sim.step()
-    print('velocities', sim.velocities)
-    print("radii", sim.radii)
-    print('max radius', max(sim.radii))
+    #print('velocities', sim.velocities)
+    #print("radii", sim.radii)
+    print('max radius', max(sim.radii), sim.n_rings, sim.rings_added, sim.radii[0])
     #input("press enter")
 
 
