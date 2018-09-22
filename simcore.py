@@ -103,38 +103,14 @@ class Sim:
         self.velocities = new_velocities
         
 
-
-sim = Sim(1e23, 1e5)
-while sim.radii[0] > 0: 
-    for i in range(100):
-        sim.step()
-    #print('velocities', sim.velocities)
-    #print("radii", sim.radii)
-    print('max radius', max(sim.radii), sim.n_rings, sim.rings_added, sim.radii[0])
-    #input("press enter")
-
-
-
-
-time = 0.0
-v = 1e5
-r = 1e10
-def step():
-    global time, v, r
-    time += step_time
-    a = ring_accel(r, r)
-    v_new = v + a * step_time
-    r_new = r + v * step_time + 0.5 * a * step_time * step_time
-    v = v_new
-    r = r_new
-    print(v, r, a)
-    return r,v
-    
-#while r > 0:
-#    step()
-
-
 if __name__ == "__main__":
-    pass
+    sim = Sim(1e23, 1e5)
+    while sim.radii[0] > 0: 
+        for i in range(100):
+            sim.step()
+        #print('velocities', sim.velocities)
+        #print("radii", sim.radii)
+        print('max radius', max(sim.radii), sim.n_rings, sim.rings_added, sim.radii[0])
+        #input("press enter")
 
     
