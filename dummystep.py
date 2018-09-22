@@ -23,4 +23,6 @@ def step():
     return points
 
 if __name__ == "__main__":
+    step()
     print(step())
+    
