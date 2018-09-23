@@ -20,7 +20,8 @@ fig = plt.figure()
 ax = fig.add_subplot(111, autoscale_on=False, xlim=xlim, ylim=ylim)
 ax.grid()
 
-
+Wrtier= animation.writers['ffmpeg']
+writer= Writer(fps=15,metadata=dict(artist='Me'),bitrate=1800)
 
 def animate(t):
     # t is count of iterations
@@ -37,5 +38,6 @@ def animate(t):
 
 #interval in milliseconds
 ani = animation.FuncAnimation(fig, animate, interval=300, blit=True)
+ani.save('anime.mp4',writer=writer)
 
 plt.show()

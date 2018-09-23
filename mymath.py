@@ -23,7 +23,14 @@ w_delta_T=373-273
 l_del=6-0
 t_l=6
 l_sup_con=297*6
+be_o_spec=1.020
+ber_del_t=4170-2780
+T_ber=330
 
+beaumass=mass_flux(au,sigma,be_o_spec,T_ber,ber_del_t)
+belymass=mass_flux(ly,sigma,be_o_spec,T_ber,ber_del_t)
+print(beaumass)
+print("BeO with a lightyear " , belymass)
 auleadmass=mass_flux(au,sigma,l_sup_con,t_l,l_del)
 lyleadmass=mass_flux(ly,sigma,l_sup_con,t_l,l_del)
 tenlyleadmass=mass_flux(10*ly,sigma,l_sup_con,t_l,l_del)
