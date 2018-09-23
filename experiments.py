@@ -103,7 +103,7 @@ if __name__ == "__main__":
     pass
     #experiment(1e23, 1e5, ring_mass=1e30, starting_radius=1e10, step_time=1e5)
     #experiment(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5) #Drop, water, 1au
-    #print(failable_experiment(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5)) ### success for water and 1AU
+    print(failable_experiment(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5)) ### success for water and 1AU
     #recursive_experiment(2e20, 0, ring_mass=8e27, starting_radius=1.5e11, step_time=1e5) ### good demo of rec
     #recursive_experiment(2e20, 0, ring_mass=5e10, starting_radius=1.5e11, step_time=1e1)  # !!!!!! exhaustive search
     #recursive_experiment(8.2e29, 0, ring_mass=5e10, starting_radius=9.4e15, step_time=1e1) # 1 ly and water search
@@ -112,5 +112,5 @@ if __name__ == "__main__":
     #recursive_experiment(3.2e33, 0, ring_mass=3e38, starting_radius=1.9e17, step_time=1e7)
 
     #recursive_experiment(9e13, 0, ring_mass=1.6e23, starting_radius=1.5e11, step_time=1e7) # LEAD success 1au
-    recursive_experiment(9.5e31, 0, ring_mass=1.6e37, starting_radius=5000 * 9.4e15, step_time=1e9)
+    #recursive_experiment(9.5e31, 0, ring_mass=1.6e37, starting_radius=5000 * 9.4e15, step_time=1e9)
     

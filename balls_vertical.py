@@ -10,14 +10,12 @@ import matplotlib.pyplot as plt
 
 import matplotlib.animation as animation
 import math
-import ringinterpret as interpret
+import vertinterpret
 
 # bounds of the room
-
-# xlim = (-1e13,1e13)
-# ylim = (-1e13,1e13)
-xlim = (-interpret.max_radius,interpret.max_radius)
-ylim = (-interpret.max_radius,interpret.max_radius)
+xlim = (0,40)
+#ylim = (0,1e13)
+ylim = (0,1e12)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, autoscale_on=False, xlim=xlim, ylim=ylim)
@@ -28,11 +26,11 @@ ax.grid()
 def animate(t):
     # t is count of iterations
     scatters = []
-    points = interpret.step()
+    points = vertinterpret.step()
     for p in points:
         x = points[p]['x']
         y = points[p]['y']
-        scatter = ax.plot([], [], 'o', markersize=5)[0]
+        scatter = ax.plot([], [], 'o', markersize=10)[0]
         scatter.set_data([x, y])
         scatters.append(scatter)
         
