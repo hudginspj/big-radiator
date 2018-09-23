@@ -64,7 +64,7 @@ def failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius,
             sim.step()
             if test_initial(sim):
                 return test_initial(sim)
-        print_status(sim)
+        #print_status(sim)
         masses.append(ring_mass * sim.n_rings)   ##### TODO remove for initial
     # Average phase
     for i in range(50):
@@ -74,20 +74,20 @@ def failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius,
             return test_average(sim)  
         masses.append(ring_mass * sim.n_rings)
         velocities.append(sim.velocities[0])
-        print_status(sim)
+        #print_status(sim)
     #radius = max(sim.radii)
     mass = ring_mass * sim.n_rings
-    print('mass', mass, 'avg mass', numpy.mean(masses), 'avg max velocity', numpy.mean(velocities))
+    #print('mass', mass, 'avg mass', numpy.mean(masses), 'avg max velocity', numpy.mean(velocities))
     #quick_plot(sim.radii)
     #quick_plot(masses)   
     return "success", numpy.mean(masses), numpy.mean(velocities)
 
 def recursive_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time):
-    print("parameters:", mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
+    #print("parameters:", mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
     # print(failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time))
     # return
     outcome, mass, velocity = failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
-    print("!"*25, 'OUTCOME', outcome)
+    #print("!"*25, 'OUTCOME', outcome)
     if outcome == "not_enough_rings":
         return recursive_experiment(mass_flux, initial_velocity, ring_mass/2, starting_radius, step_time)
     if outcome == "too_many_rings":
