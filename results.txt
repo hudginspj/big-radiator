@@ -1,0 +1,63 @@
+## Inspiration
+* Concept is to take the concept of a liquid droplet radiator to astronomical scales where it self gravitates to answer the question of how big can you make a radiator. 
+* Limiting factor for many systems, including performing massive amounts of computations in one place, is head dissipation. In particular, radiators work less effectively at colder ambient temperature, so this project seeks to determine the mass and size of a radiator that would be effective at the ambient temperature of space. 
+
+
+## How the project works
+For a given radius, results for power and mass flux can be computed from knowledge of physics, results for total mass and maximum velocity require a step simulation, which we implemented in python.
+
+Simulations' timescales vary wildly, so we performed recursive experiments to automatically determine the best time step size for given conditions.
+
+## Challenges we ran into
+Initially starting with expanding rings/spheres resulted in a collapsing system. System is more stable when starting with decreasing rings/spheres.
+
+## What we learned
+Lots of astrophysics and thermodynamics.
+Solids have poor heat capacity at cryogenic temperatures unless they are superconducting
+
+##General results:
+A disk structure is unstable and will eject matter. Spherical structures are stable.
+
+It is possible to build very large radiators that operate at cryogenic temperatures. This suggests that current surveys for the waste heat of extraterrestrial civilizations should search in the submillimeter wavelengths instead of only infrared.
+
+##Results
+Power, mass flux, mass and velocity for initial radii from 1e11 through 1e17 for water. For larger initial radii, velocity approaches the speed of light. Specific head capacity of water is 4181.3 J/(kg*K) at temperature 323K. Temperature change from 373K-273K was assumed.
+
+Material: Water
+---------------
+Radius           Power           Mass Flux       Mass            Velocity
+1.00E+11         3.88E+25        9.27E+19        1.02E+28        -4.56E+03
+1.00E+12         3.88E+27        9.27E+21        2.37E+30        -2.09E+04
+1.00E+13         3.88E+29        9.27E+23        4.66E+32        -9.97E+04
+1.00E+14         3.88E+31        9.27E+25        1.02E+35        -4.56E+05
+1.00E+15         3.88E+33        9.27E+27        2.37E+37        -2.09E+06
+1.00E+16         3.88E+35        9.27E+29        4.66E+39        -9.97E+06
+1.00E+17         3.88E+37        9.27E+31        1.02E+42        -4.81E+07
+
+Power, mass flux, mass and velocity for initial radii from 1e11 through 1e19 for superconducting lead. Specific head capacity of water is 297 J/(kg*K) at temperature 6K. Temperature change from 9K-3K was assumed.
+
+Material: Superconducting Cryogenic Lead 
+--------------
+Radius           Power           Mass Flux       Mass            Velocity
+1.00E+11         4.62E+18        2.59E+15        9.27E+24        -1.38E+02
+1.00E+12         4.62E+20        2.59E+17        2.03E+27        -6.64E+02
+1.00E+13         4.62E+22        2.59E+19        4.48E+29        -3.05E+03
+1.00E+14         4.62E+24        2.59E+21        9.27E+31        -1.38E+04
+1.00E+15         4.62E+26        2.59E+23        2.01E+34        -6.77E+04
+1.00E+16         4.62E+28        2.59E+25        4.48E+36        -3.05E+05
+1.00E+17         4.62E+30        2.59E+27        9.27E+38        -1.38E+06
+1.00E+18         4.62E+32        2.59E+29        2.01E+41        -6.77E+06
+1.00E+19         4.62E+34        2.59E+31        4.48E+43        -3.05E+07
+
+Power, mass flux, mass and velocity for initial radii from 1e11 through 1e17 for beryllium. For larger initial radii, velocity approaches the speed of light. Specific head capacity of water is 1820 J/(kg*K) at temperature 298K. Temperature change from 373K-273K was assumed.
+
+Material: Beryllium
+-------------------
+Radius           Power           Mass Flux       Mass            Velocity
+1.00E+11         2.81E+25        1.54E+20        1.44E+28        -5.42E+03
+1.00E+12         2.81E+27        1.54E+22        3.20E+30        -2.71E+04
+1.00E+13         2.81E+29        1.54E+24        6.54E+32        -1.13E+05
+1.00E+14         2.81E+31        1.54E+26        1.44E+35        -5.42E+05
+1.00E+15         2.81E+33        1.54E+28        3.20E+37        -2.71E+06
+1.00E+16         2.81E+35        1.54E+30        6.56E+39        -1.15E+07
+1.00E+17         2.81E+37        1.54E+32        1.44E+42        -5.42E+07

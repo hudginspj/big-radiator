@@ -8,21 +8,27 @@ from math import *
 import simcore
 import random
 
-sim = simcore.Sim(1e23, 1e5) #### Default
-max_radius = 1e13
+#sim = simcore.Sim(1e23, 1e5) #### Default
+#max_radius = 1e13
 
-# sim = simcore.Sim(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5)
-# max_radius = sim.starting_radius * 1.5
-    
+sim = simcore.Sim(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5)
+max_radius = sim.starting_radius * 1.5
+
+# sim = simcore.Sim(2e20, 7e3, ring_mass=2e27, starting_radius=1e10, step_time=1e5)
+# max_radius = 1e12
+
+# sim = simcore.Sim(2e20, 7e3, ring_mass=3e27, starting_radius=1e10, step_time=1e5)
+# max_radius = 1e12
+
 def step():
     for i in range(100):
         sim.step()
 
-    print(sim.steps, 'max radius', max(sim.radii), sim.n_rings, sim.rings_added)
+    print(sim.steps, 'max radius', max(sim.radii), sim.n_rings, sim.rings_added, 'vel', sim.velocities[0])
 
     points = {}
-    for i, r in enumerate(sim.radii[1:]):
-        n = 10 #343
+    for i, r in enumerate(sim.radii):#[1:]):
+        n = 30 #343
         for j in range(n):
             theta = 2 * pi * (j + (0.1 *i))  / n
             #gap = r - sim.radii[i-1]
