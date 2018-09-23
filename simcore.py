@@ -27,7 +27,7 @@ def point_accel(r_1, theta_1, r_2, m):
 
 
 
-def ring_accel(r_ring_1, r_2):
+def ring_accel(r_ring_1, r_2, ring_mass):
     total_accel = 0.0
     for i in range(n_points_in_ring//2):
         theta = 2 * pi * (i + 0.5) / n_points_in_ring
@@ -43,13 +43,16 @@ def ring_accel(r_ring_1, r_2):
 
 
 # mass_flux & step time -> ring mass
-starting_radius = 1e10
-step_time = 1e5
-ring_mass = 1e30#####1e29
+#starting_radius = 1e10
+#step_time = 1e5
+#ring_mass = 1e30#####1e29
 class Sim:
-    def __init__(self, mass_flux, initial_velocity):
+    def __init__(self, mass_flux, initial_velocity, ring_mass=1e30, starting_radius=1e10, step_time=1e5):
         self.mass_flux = mass_flux
         self.initial_velocity = initial_velocity
+        self.ring_mass=ring_mass
+        self.starting_radius = starting_radius
+        self.step_time = step_time
         self.radii = []
         self.velocities = []
         self.n_rings = 0
@@ -58,22 +61,16 @@ class Sim:
         self.add_ring()
         
     def add_ring(self):
-        self.radii.append(starting_radius)
+        self.radii.append(self.starting_radius)
         self.velocities.append(self.initial_velocity)
         self.n_rings += 1
         self.rings_added += 1
         
-    #def remove_ring(self, index):
-        #self.n_rings -= 1
-        #self.radii.pop(index)
-        #self.velocities.pop(index)
-        #print("done")
-        #raise Exception("done")
-        
     def step(self):
-        self.t += step_time
+        stable = True
+        self.t += self.step_time
         
-        if self.mass_flux * self.t > ring_mass * self.rings_added:
+        if self.mass_flux * self.t > self.ring_mass * self.rings_added:
             
             #print(self.mass_flux * self.t, ring_mass * self.n_rings)
             self.add_ring()
@@ -84,12 +81,12 @@ class Sim:
         for i in range(self.n_rings): # accelerating ring
             a = 0.0
             for j in range(self.n_rings):  #force rings
-                a += ring_accel(self.radii[j], self.radii[i])
+                a += ring_accel(self.radii[j], self.radii[i], self.ring_mass)
             accels.append(a)
             v = self.velocities[i]
             r = self.radii[i]
-            new_r = r + v * step_time + 0.5 * a * step_time * step_time
-            new_v = v + a * step_time
+            new_r = r + v * self.step_time + 0.5 * a * self.step_time * self.step_time
+            new_v = v + a * self.step_time
             if new_r < 0 or (new_v > 0 and v < 0):
                 print("done", new_r, new_v, v)
                 self.n_rings -= 1
@@ -97,11 +94,20 @@ class Sim:
             else:
                 new_radii.append(new_r)
                 new_velocities.append(new_v)
+        for i in range(1, self.n_rings-1):
+            if new_radii[i] - new_radii[i+1] < new_radii[i-1] - new_radii[i]:
+                stable = False
+                #print("fliping!")
+                new_radii[i] = (new_radii[i+1] + new_radii[i-1]) / 2
+            # if new_velocities[i] > new_velocities[i+1]:
+            #     #print("fixed velocity")
+            #     new_velocities[i] = (new_velocities[i] + new_velocities[i+1])/2
+            #     new_velocities[i+1] = (new_velocities[i] + new_velocities[i+1])/2
         #print(self.radii, new_radii)
         #print("radii", new_radii, 'velocities', new_velocities)#, accels)
         self.radii = new_radii
         self.velocities = new_velocities
-        
+        return stable 
 
 if __name__ == "__main__":
     sim = Sim(1e23, 1e5)

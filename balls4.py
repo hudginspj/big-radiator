@@ -13,7 +13,7 @@ import math
 import vertinterpret
 
 # bounds of the room
-xlim = (0,30)
+xlim = (0,40)
 ylim = (0,1e13)
 
 fig = plt.figure()
