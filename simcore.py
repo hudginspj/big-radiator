@@ -58,6 +58,7 @@ class Sim:
         self.n_rings = 0
         self.rings_added = 0
         self.t = 0
+        self.steps = 0
         self.add_ring()
         
     def add_ring(self):
@@ -69,6 +70,7 @@ class Sim:
     def step(self):
         stable = True
         self.t += self.step_time
+        self.steps += 1
         
         if self.mass_flux * self.t > self.ring_mass * self.rings_added:
             
