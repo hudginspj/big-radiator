@@ -44,9 +44,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as ani
 import ringinterpret as dt
-
+xlim = (0,30)
+ylim = (0,1e13)
 fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+ax = fig.add_subplot(111, projection='3d',  autoscale_on=True)
 def anime(a):
     data = dt.step()
     for i in data:
