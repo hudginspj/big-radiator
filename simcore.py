@@ -5,8 +5,8 @@ Created on Sat Sep 22 11:47:35 2018
 @author: pjhud
 """
 from math import *
-import ringaccels as accelfuncs
-#import sphereaccels as accelfuncs
+#import ringaccels as accelfuncs
+import sphereaccels as accelfuncs
 
 class Sim:
     def __init__(self, mass_flux, initial_velocity, ring_mass=1e30, starting_radius=1e10, step_time=1e5):
