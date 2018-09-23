@@ -20,7 +20,7 @@ def step():
     for i, r in enumerate(sim.radii):
         n = 10
         for j in range(n):
-            theta = 2 * pi * i / n
+            theta = 2 * pi * (j + (0.1 *i))  / n
             x = r * sin(theta)
             y = r * cos(theta)
             z = 0
