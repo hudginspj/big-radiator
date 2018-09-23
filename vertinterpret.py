@@ -7,8 +7,11 @@ Created on Sat Sep 22 11:47:35 2018
 from math import *
 import simcore
 
-sim = simcore.Sim(1e23, 1e5)
-#while sim.radii[0] > 0: 
+#sim = simcore.Sim(1e23, 1e5)
+#####sim = simcore.Sim(1e23, 1e5, ring_mass=1e30, starting_radius=1e10, step_time=1e5)
+#sim = simcore.Sim(2e20, 5e3, ring_mass=2e27, starting_radius=1e10, step_time=1e5)
+sim = simcore.Sim(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5) #water, 1AU
+
     
 def step():
     for i in range(100):

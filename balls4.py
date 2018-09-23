@@ -14,7 +14,8 @@ import vertinterpret
 
 # bounds of the room
 xlim = (0,40)
-ylim = (0,1e13)
+#ylim = (0,1e13)
+ylim = (0,1e12)
 
 fig = plt.figure()
 ax = fig.add_subplot(111, autoscale_on=False, xlim=xlim, ylim=ylim)

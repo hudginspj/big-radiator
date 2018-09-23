@@ -88,7 +88,7 @@ class Sim:
             new_r = r + v * self.step_time + 0.5 * a * self.step_time * self.step_time
             new_v = v + a * self.step_time
             if new_r < 0 or (new_v > 0 and v < 0):
-                print("done", new_r, new_v, v)
+                #print("done", new_r, new_v, v)
                 self.n_rings -= 1
                 #exit(0)
             else:
@@ -108,6 +108,8 @@ class Sim:
         self.radii = new_radii
         self.velocities = new_velocities
         return stable 
+
+
 
 if __name__ == "__main__":
     sim = Sim(1e23, 1e5)
