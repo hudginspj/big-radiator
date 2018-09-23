@@ -14,7 +14,7 @@ def layer_accel(r_shell_1, r_2, layer_mass):
     if r_shell_1 > r_2:
         return 0
     else: 
-        return G * layer_mass / (r_2 * r_2)
+        return -G * layer_mass / (r_2 * r_2)
 
     
 
