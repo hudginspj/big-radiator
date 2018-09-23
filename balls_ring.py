@@ -27,7 +27,6 @@ ax.grid()
 
 all_scatters = None
 
-
 def animate(t):
     global all_scatters
     # t is count of iterations

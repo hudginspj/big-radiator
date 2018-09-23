@@ -32,21 +32,22 @@ def experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_tim
     print('radius', radius, 'mass', mass)
     #quick_plot(sim.radii)
     quick_plot(masses)
+    plot_2d(sim.radii, masses)
 
 def test_initial(sim):
     if sim.n_rings > 35:
-         return "too_many_rings", 0, 0
+         return "too_many_rings"
     return None
 def test_average(sim):
     if sim.n_rings > 35:
-        return "too_many_rings", 0, 0
+        return "too_many_rings"
     if sim.n_rings == 0:
         return "no_rings"
     if sim.radii[0] > sim.starting_radius * 0.8:
-        return "not_reaching_center", 0, 0
+        return "not_reaching_center"
     if sim.n_rings < 8:
         #print('radii', sim.radii)
-        return "not_enough_rings", 0, 0
+        return "not_enough_rings"
     
     return None
 
@@ -64,7 +65,7 @@ def failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius,
             sim.step()
             if test_initial(sim):
                 return test_initial(sim)
-        #print_status(sim)
+        print_status(sim)
         masses.append(ring_mass * sim.n_rings)   ##### TODO remove for initial
     # Average phase
     for i in range(50):
@@ -74,34 +75,30 @@ def failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius,
             return test_average(sim)  
         masses.append(ring_mass * sim.n_rings)
         velocities.append(sim.velocities[0])
-        #print_status(sim)
+        print_status(sim)
     #radius = max(sim.radii)
     mass = ring_mass * sim.n_rings
-    #print('mass', mass, 'avg mass', numpy.mean(masses), 'avg max velocity', numpy.mean(velocities))
+    print('mass', mass, 'avg mass', numpy.mean(masses), 'avg max velocity', numpy.mean(velocities))
     #quick_plot(sim.radii)
-    #quick_plot(masses)   
-    return "success", numpy.mean(masses), numpy.mean(velocities)
+    quick_plot(masses)   
+    return "success" 
 
 def recursive_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time):
-    #print("parameters:", mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
-    # print(failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time))
-    # return
-    outcome, mass, velocity = failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
-    #print("!"*25, 'OUTCOME', outcome)
+    print("parameters:", mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
+    outcome = failable_experiment(mass_flux, initial_velocity, ring_mass, starting_radius, step_time)
+    print("!"*25, 'OUTCOME', outcome)
     if outcome == "not_enough_rings":
-        return recursive_experiment(mass_flux, initial_velocity, ring_mass/2, starting_radius, step_time)
+        recursive_experiment(mass_flux, initial_velocity, ring_mass/2, starting_radius, step_time)
     if outcome == "too_many_rings":
-        return recursive_experiment(mass_flux, initial_velocity, ring_mass*10, starting_radius, step_time)
+        recursive_experiment(mass_flux, initial_velocity, ring_mass*10, starting_radius, step_time)
     if outcome == "not_reaching_center":
-        return recursive_experiment(mass_flux, initial_velocity, ring_mass*2, starting_radius, step_time*10)
+        recursive_experiment(mass_flux, initial_velocity, ring_mass*2, starting_radius, step_time*10)
     #if outcome == "no_rings":
-    #    return recursive_experiment(mass_flux, initial_velocity, ring_mass*2, starting_radius, step_time/2)
-    return mass, velocity
+    #    recursive_experiment(mass_flux, initial_velocity, ring_mass*2, starting_radius, step_time/2)
     
 
 def experiment_wrapper(mass_flux, radius):
-    mass, velocity = recursive_experiment(mass_flux, 0, ring_mass=1e15, starting_radius=radius, step_time=1e1)
-    return mass, velocity
+    recursive_experiment(mass_flux, 0, ring_mass=2e26, starting_radius=1.5e11, step_time=1e1)
 
 if __name__ == "__main__":
     pass
@@ -109,7 +106,7 @@ if __name__ == "__main__":
     #experiment(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5) #Drop, water, 1au
     #print(failable_experiment(2e20, 0, ring_mass=2e27, starting_radius=1.5e11, step_time=1e5)) ### success for water and 1AU
     #recursive_experiment(2e20, 0, ring_mass=8e27, starting_radius=1.5e11, step_time=1e5) ### good demo of rec
-    recursive_experiment(2e20, 0, ring_mass=5e10, starting_radius=1.5e11, step_time=1e1)  # !!!!!! exhaustive search
+    #recursive_experiment(2e20, 0, ring_mass=5e10, starting_radius=1.5e11, step_time=1e1)  # !!!!!! exhaustive search
     #recursive_experiment(8.2e29, 0, ring_mass=5e10, starting_radius=9.4e15, step_time=1e1) # 1 ly and water search
     #recursive_experiment(8.2e29, 0, ring_mass=3e38, starting_radius=9.4e15, step_time=1e7) # 1ly and water success
     #recursive_experiment(8.2e31, 0, ring_mass=3e38, starting_radius=9.4e16, step_time=1e7) #10ly search
@@ -117,4 +114,5 @@ if __name__ == "__main__":
 
     #recursive_experiment(9e13, 0, ring_mass=1.6e23, starting_radius=1.5e11, step_time=1e7) # LEAD success 1au
     #recursive_experiment(9.5e31, 0, ring_mass=1.6e37, starting_radius=5000 * 9.4e15, step_time=1e9)
+    recursive_experiment(2.6e32, 0, ring_mass=5e10, starting_radius=9.4e15, step_time=1e1)
     
